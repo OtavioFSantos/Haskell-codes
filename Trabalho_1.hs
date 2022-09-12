@@ -95,10 +95,10 @@ bbigStep (Igual e1 e2,s)
  | ebigStep (e1, s) == ebigStep (e2, s) = True
  | otherwise = False
 
---Imperativas
+-- Imperativas
 cbigStep :: (C,Memoria) -> (C,Memoria)
 cbigStep (Skip,s) = (Skip,s)
-cbigStep (Atrib (Var x) e,s) = (Skip, (mudaVar s x (procuraVar s x)))
+cbigStep (Atrib (Var x) e,s) = (Skip, (mudaVar s x (ebigStep(e, s))))
 cbigStep (If b c1 c2,s)
  | bbigStep(b, s) == True = (c1, s)
  | otherwise = (c2, s)
