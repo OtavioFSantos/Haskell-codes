@@ -159,3 +159,8 @@ fatorial = (Seq (Atrib (Var "y") (Num 1))
                 (While (Not (Igual (Var "x") (Num 1)))
                        (Seq (Atrib (Var "y") (Mult (Var "y") (Var "x")))
                             (Atrib (Var "x") (Sub (Var "x") (Num 1))))))
+
+exPrograma1 :: C
+exPrograma1 = (If (Leq (Var "z") (Var "x")) 
+                (Atrib (Var "y") (Mult (Num 5) (Num 5))) 
+                  (Atrib (Var "y") (Mult (Num 10) (Num 10))))
