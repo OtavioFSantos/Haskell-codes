@@ -100,8 +100,8 @@ cbigStep :: (C,Memoria) -> (C,Memoria)
 cbigStep (Skip,s) = (Skip,s)
 cbigStep (Atrib (Var x) e,s) = (Skip, (mudaVar s x (ebigStep(e, s))))
 cbigStep (If b c1 c2,s)
- | bbigStep(b, s) == True = (c1, s)
- | otherwise = (c2, s)
+ | bbigStep(b, s) == True = cbigStep(c1, s)
+ | otherwise = cbigStep(c2, s)
 cbigStep (Seq c1 c2,s) = let(c, sl) = cbigStep(c1, s) in cbigStep(c2, sl)
 cbigStep (While b c, s) 
  | bbigStep(b, s) == True = (Seq c (While b c), s)
@@ -161,6 +161,10 @@ fatorial = (Seq (Atrib (Var "y") (Num 1))
                             (Atrib (Var "x") (Sub (Var "x") (Num 1))))))
 
 exPrograma1 :: C
-exPrograma1 = (If (Leq (Var "z") (Var "x")) 
+exPrograma1 = (If (Leq (Var "x") (Var "z")) 
                 (Atrib (Var "y") (Mult (Num 5) (Num 5))) 
-                  (Atrib (Var "y") (Mult (Num 10) (Num 10))))
+                  (Atrib (Var "y") (Num 10)))
+
+exPrograma2 :: C
+exPrograma2 = (DoWhile (Atrib (Var "x") (Soma (Var "x") (Num 1))) 
+                (Leq (Var "x") (Num 5)))
